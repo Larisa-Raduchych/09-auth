@@ -1,4 +1,4 @@
-import SidebarNotes from "../../../../components/SidebarNotes/SidebarNotes";
+import SidebarNotes from "../../../../../components/SidebarNotes/SidebarNotes";
 
 const SidebarDefault = () => {
   return <SidebarNotes />;
