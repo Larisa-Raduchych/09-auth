@@ -66,3 +66,39 @@ export async function login(userData: UserDataToRegister): Promise<User> {
   const response = await nextApi.post<User>("/auth/login", userData);
   return response.data;
 }
+
+export async function logout(): Promise<void> {
+  await nextApi.post("/auth/logout");
+}
+
+// type CheckSessionResponse = {
+//   success: boolean;
+// };
+
+export async function checkSession(): Promise<boolean> {
+  const response = await nextApi.get<{ success: boolean }>("/auth/session");
+  return response.data.success;
+}
+
+// export async function checkSession(): Promise<boolean> {
+//   try {
+//     const response = await nextApi.get("/auth/session");
+//     return response.status === 200;
+//   } catch {
+//     return false;
+//   }
+// }
+
+export async function getMe(): Promise<User> {
+  const response = await nextApi.get<User>("/users/me");
+  return response.data;
+}
+
+interface UpdateMeRequest {
+  username: string;
+}
+
+export async function updateMe(data: UpdateMeRequest): Promise<User> {
+  const response = await nextApi.patch<User>("/users/me", data);
+  return response.data;
+}

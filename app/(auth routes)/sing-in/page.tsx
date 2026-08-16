@@ -1,14 +1,28 @@
 "use client";
 import { login } from "@/lib/api/clientApi";
 import css from "./SignInPage.module.css";
+import { useAuthStore } from "@/lib/store/authStore";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+
 export default function SignInPage() {
-  const handleSubmit = (formData: FormData) => {
-    const registerData = {
+  const router = useRouter();
+  const setUser = useAuthStore((store) => store.setUser);
+  const [error, setError] = useState("");
+
+  const handleSubmit = async (formData: FormData) => {
+    const loginData = {
       email: formData.get("email") as string,
       password: formData.get("password") as string,
     };
-
-    login(registerData);
+    try {
+      const userData = await login(loginData);
+      console.log(userData);
+      setUser(userData);
+      router.push("/profile");
+    } catch {
+      setError("Login error");
+    }
   };
   return (
     <main className={css.mainContent}>
@@ -43,7 +57,7 @@ export default function SignInPage() {
           </button>
         </div>
 
-        {/* <p className={css.error}>{error}</p> */}
+        {error && <p className={css.error}>{error}</p>}
       </form>
     </main>
   );

@@ -2,15 +2,28 @@
 
 import { register } from "@/lib/api/clientApi";
 import css from "./SignUpPage.module.css";
+import { useAuthStore } from "@/lib/store/authStore";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function SignUpPage() {
-  const handleSubmit = (formData: FormData) => {
+  const router = useRouter();
+  const setUser = useAuthStore((store) => store.setUser);
+  const [error, setError] = useState("");
+
+  const handleSubmit = async (formData: FormData) => {
     const registerData = {
       email: formData.get("email") as string,
       password: formData.get("password") as string,
     };
 
-    register(registerData);
+    try {
+      const userData = await register(registerData);
+      setUser(userData);
+      router.push("/profile");
+    } catch {
+      setError("Registretion error");
+    }
   };
 
   return (
@@ -45,7 +58,7 @@ export default function SignUpPage() {
           </button>
         </div>
 
-        <p className={css.error}>Error</p>
+        {error && <p className={css.error}>{error}</p>}
       </form>
     </main>
   );

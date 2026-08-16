@@ -4,6 +4,7 @@ import "./globals.css";
 import TanStackProvider from "@/components/TanStackProvider/TanStackProvider";
 import Header from "@/components/Header/Header";
 import Footer from "@/components/Footer/Footer";
+import AuthProvider from "@/components/AuthProvider/AuthProvider";
 
 const roboto = Roboto({
   weight: ["400", "500", "700"],
@@ -12,15 +13,13 @@ const roboto = Roboto({
   subsets: ["latin"],
 });
 
-
 export const metadata: Metadata = {
   title: "My NoteHub App",
   description: "Create your personal notes",
   openGraph: {
     title: "My NoteHub App",
-    description:
-      "Create your personal notes",
-    url: "https://08-zustand-six-flax.vercel.app", 
+    description: "Create your personal notes",
+    url: "https://08-zustand-six-flax.vercel.app",
     images: [
       {
         url: "https://ac.goit.global/fullstack/react/notehub-og-meta.jpg",
@@ -43,10 +42,12 @@ export default function RootLayout({
     <html lang="en">
       <body className={roboto.variable}>
         <TanStackProvider>
-          <Header />
-          {children}
-          {modal}
-          <Footer />
+          <AuthProvider>
+            <Header />
+            {children}
+            {modal}
+            <Footer />
+          </AuthProvider>
         </TanStackProvider>
       </body>
     </html>
