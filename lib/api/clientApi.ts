@@ -3,6 +3,11 @@ import type { Note, NoteTag } from "@/types/note";
 import { nextApi } from "./api";
 import type { User } from "@/types/user";
 
+export interface NotesHttpResponse {
+  notes: Note[];
+  totalPages: number;
+}
+
 const notehubApi = axios.create({
   baseURL: "https://notehub-public.goit.study/api",
   headers: {
