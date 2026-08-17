@@ -74,7 +74,7 @@ export default function NoteForm() {
         <select
           id="tag"
           name="tag"
-          defaultValue={draft.tag}
+          value={draft.tag}
           onChange={handleChange}
           className={css.select}
         >
